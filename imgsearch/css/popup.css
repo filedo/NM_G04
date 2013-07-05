@@ -1,0 +1,31 @@
+.popup {
+    list-style: none;
+}
+.popup a {
+    display: block;
+    text-decoration: none;
+    font-weight: bold;
+}
+.popup li {
+    float: left;
+    position: relative;
+}
+.popup li span {
+    display: none;
+    z-index: 2;
+    position: absolute;
+    background: #ffc;
+    border: 1px solid #fc6;
+}
+.open{
+     background: #fc6;
+     color: #fff;
+     cursor: pointer;
+     width:45px;
+     padding: 10px
+     }
+#slideBox{
+     padding: 10px;
+     border: 1px #ccc solid;
+     display:none;
+     }
