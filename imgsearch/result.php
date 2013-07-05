@@ -60,32 +60,62 @@ $result_num = 0;
 
 
 $_POST["number"]=mb_convert_kana($_POST["number"],"n","utf-8");//全角を半角に変換
+$_POST["number1"]=mb_convert_kana($_POST["number1"],"n","utf-8");//全角を半角に変換
+$_POST["number2"]=mb_convert_kana($_POST["number2"],"n","utf-8");//全角を半角に変換
 if (isset($_POST["keyword"]) && isset($_POST["number"])) {  
-  if(array_key_exists($_POST["keyword"], $tf_data) && $_POST["keyword"] <>null ){
-    
-	if ($_POST["number"]==null || !preg_match("/^[0-9]+$/", $_POST["number"])) {
-		echo "人数を正しく入力して下さい。";
-	}
-    else {
-    	echo "キーワード「".$_POST["keyword"]."」　人数「";
-    	echo $_POST["number"]."人」での検索結果<br>\n";
-    echo "<hr><br>\n";
-    echo "<ul class=\"popup\"\n>";
-        if(@$_POST["sort"] == "downsort"){
-            arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
-        }
-    foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
-      if (@$_POST["number"] == @$fc_data[$key] && @$_POST["number"]<>null){
-		echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
+    if(array_key_exists($_POST["keyword"], $tf_data) && $_POST["keyword"] <>null ){
+        if(@$_POST["check"]　==　"0"){
+            if ($_POST["number"]==null || !preg_match("/^[0-9]+$/", $_POST["number" ])) {
+                echo "人数を正しく入力して下さい。";
+            }
+            else {
+                echo "キーワード「".$_POST["keyword"]."」　人数「";
+                echo $_POST["number"]."人」での検索結果<br>\n";
+                echo "<hr><br>\n";
+                echo "<ul class=\"popup\"\n>";
+                if(@$_POST["sort"] == "downsort"){
+                    arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
+                }
+                foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
+                        if (@$_POST["number"] == @$fc_data[$key] && @$_POST["number"]<>null){
+                            echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
 		/*
 		echo "キーワード出現回数＝".$val."回<br>\n";
 		echo "写真中の人の数＝".@$fc_data[$key]."人<br>\n";
 		echo "$key<br><br><br>\n";
 		*/
-		$result_num++;
-      }
-    }
-    }
+                            $result_num++;
+                        }
+                }
+            }
+        }
+        else {
+                if ($_POST["number1"]==null || !preg_match("/^[0-9]+$/", $_POST["number1"])) {
+                    echo "人数を正しく入力して下さい。";
+                }
+                else if ($_POST["number2"]==null || !preg_match("/^[0-9]+$/", $_POST["number2"])) {
+                    echo "人数を正しく入力して下さい。";
+                }
+                else{
+                    echo "キーワード「".$_POST["keyword"]."」 人数「";
+                    echo $_POST["number1"]."人から";
+                    echo $_POST["number2"]."人」までの検索結果<br>\n";
+                    if(@$_POST["sort"] == "downsort"){
+                        arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
+                    }
+                    foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
+                        if (@$_POST["number"] == @$fc_data[$key] && @$_POST["number"]<>null){
+                            echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
+                      /*
+                       echo "キーワード出現回数＝".$val."回<br>\n";
+                       echo "写真中の人の数＝".@$fc_data[$key]."人<br>\n";
+                       echo "$key<br><br><br>\n";
+                       */
+                            $result_num++;
+                        }
+                    }
+                }
+        }
     echo "</ul>";
   } elseif (@$_POST["keyword"]==null) {
     echo '検索キーワードを入力して下さい。';
