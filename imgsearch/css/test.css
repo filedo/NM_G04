@@ -1,5 +1,9 @@
 @charset"utf-8";
-body{
-    background-image:url(../images/b009.jpg);
+.search{
+    background-image:url(../images/search.gif);
+    background-repeat:repeat;
+}
+.result{
+    background-image:url(../images/result.gif);
     background-repeat:repeat;
 }

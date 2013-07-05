@@ -24,7 +24,7 @@
 	<link href="css/lightbox.css" rel="stylesheet" />
 	<link href="css/popup.css" rel="stylesheet" />
   </head>
-  <body>
+  <body class="result">
 <?php
 
 // tfファイルの読み込み　１行ずつ　最後まで

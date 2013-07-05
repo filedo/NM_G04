@@ -3,8 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>集合写真検索システム - 検索</title>
+ <link href="css/test.css" rel="stylesheet" />
   </head>
-  <body>
+  <body class="search">
 <form target="result" action="./result.php" method="post">  
    <p>    
    検索キーワード：<input type="text" name="keyword" size=20/><br>
