@@ -65,13 +65,15 @@ if (isset($_POST["keyword"]) && isset($_POST["number"])) {
     
 	if ($_POST["number"]==null || !preg_match("/^[0-9]+$/", $_POST["number"])) {
 		echo "人数を正しく入力して下さい。";
-	} else {
+	}
+    else {
     	echo "キーワード「".$_POST["keyword"]."」　人数「";
     	echo $_POST["number"]."人」での検索結果<br>\n";
-    }
     echo "<hr><br>\n";
     echo "<ul class=\"popup\"\n>";
-    arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
+        if(@$_POST["sort"] == "downsort"){
+            arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
+        }
     foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
       if (@$_POST["number"] == @$fc_data[$key] && @$_POST["number"]<>null){
 		echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
@@ -83,7 +85,8 @@ if (isset($_POST["keyword"]) && isset($_POST["number"])) {
 		$result_num++;
       }
     }
-    echo "</ul>";    
+    }
+    echo "</ul>";
   } elseif (@$_POST["keyword"]==null) {
     echo '検索キーワードを入力して下さい。';
   } else {
