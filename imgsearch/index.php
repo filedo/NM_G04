@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>集合写真検索システム - 画像検索 for G4</title>
 </head>
-	<frameset cols="200,*" border="1" framespacing="1"> 
+	<frameset cols="250,*" border="1" framespacing="1"> 
 		<frame src="./search.php" name="search">
 		<frame src="./result.php" name="result">
 <!-- フレーム未対応のユーザーには、代替テキストが表示される -->
