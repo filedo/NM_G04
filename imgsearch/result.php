@@ -58,76 +58,77 @@ fclose($f2);
 // 以下、検索処理
 $result_num = 0;
 
+if (isset($_POST["keyword"]) && isset($_POST["number"])) { 
 
-$_POST["number"]=mb_convert_kana($_POST["number"],"n","utf-8");//全角を半角に変換
-$_POST["number1"]=mb_convert_kana($_POST["number1"],"n","utf-8");//全角を半角に変換
-$_POST["number2"]=mb_convert_kana($_POST["number2"],"n","utf-8");//全角を半角に変換
-if (isset($_POST["keyword"]) && isset($_POST["number"])) {  
+	$_POST["number"]=mb_convert_kana($_POST["number"],"n","utf-8");//全角を半角に変換
     if(array_key_exists($_POST["keyword"], $tf_data) && $_POST["keyword"] <>null ){
-        if(@$_POST["check"]　==　"0"){
-            if ($_POST["number"]==null || !preg_match("/^[0-9]+$/", $_POST["number" ])) {
-                echo "人数を正しく入力して下さい。";
-            }
-            else {
-                echo "キーワード「".$_POST["keyword"]."」　人数「";
-                echo $_POST["number"]."人」での検索結果<br>\n";
-                echo "<hr><br>\n";
-                echo "<ul class=\"popup\"\n>";
-                if(@$_POST["sort"] == "downsort"){
-                    arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
-                }
-                foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
-                        if (@$_POST["number"] == @$fc_data[$key] && @$_POST["number"]<>null){
-                            echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
-		/*
-		echo "キーワード出現回数＝".$val."回<br>\n";
-		echo "写真中の人の数＝".@$fc_data[$key]."人<br>\n";
-		echo "$key<br><br><br>\n";
-		*/
-                            $result_num++;
-                        }
-                }
-            }
-        }
-        else {
-                if ($_POST["number1"]==null || !preg_match("/^[0-9]+$/", $_POST["number1"])) {
-                    echo "人数を正しく入力して下さい。";
-                }
-                else if ($_POST["number2"]==null || !preg_match("/^[0-9]+$/", $_POST["number2"])) {
-                    echo "人数を正しく入力して下さい。";
-                }
-                else{
-                    echo "キーワード「".$_POST["keyword"]."」 人数「";
-                    echo $_POST["number1"]."人から";
-                    echo $_POST["number2"]."人」までの検索結果<br>\n";
-                    if(@$_POST["sort"] == "downsort"){
-                        arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
-                    }
-                    foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
-                        if (@$_POST["number"] == @$fc_data[$key] && @$_POST["number"]<>null){
-                            echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
-                      /*
-                       echo "キーワード出現回数＝".$val."回<br>\n";
-                       echo "写真中の人の数＝".@$fc_data[$key]."人<br>\n";
-                       echo "$key<br><br><br>\n";
-                       */
-                            $result_num++;
-                        }
-                    }
-                }
-        }
+    
+    	//範囲指定有り
+    	if(isset($_POST["for"])){
+			$_POST["for"]=mb_convert_kana($_POST["for"],"n","utf-8");//全角を半角に変換
+    		if ($_POST["number"]==null || !preg_match("/^[0-9]+$/", $_POST["number"])){
+    			echo "人数を正しく入力して下さい。";
+        	}
+        	elseif ($_POST["for"]==null || !preg_match("/^[0-9]+$/", $_POST["for"])){
+    			echo "人数を正しく入力して下さい。";
+    		}
+        	else {
+        	
+        		//数値入れ替え
+        		if($_POST["number"] > $_POST["for"]){
+        			$baff = $_POST["for"];
+        			$_POST["for"] =  $_POST["number"];
+        			$_POST["number"] = $baff;
+        		}
+        	
+       			echo "キーワード「".$_POST["keyword"]."」　人数「".$_POST["number"]."～".$_POST["for"]."人」での検索結果<br>\n";
+            	echo "<hr><br>\n";
+            	echo "<ul class=\"popup\"\n>";
+            	if(@$_POST["sort"] == "downsort"){
+            		arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
+            	}
+            	foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
+            		//条件『numberよりkeyが大きく、forよりkeyが小さい』
+            		if (@$_POST["number"] <= @$fc_data[$key] && @$fc_data[$key] <= @$_POST["for"] && @$_POST["number"]<>null && @$_POST["for"]<>null){
+                		echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
+						$result_num++;
+                	}
+            	}
+        	}
+    	}
+    	//範囲指定無し
+    	else {
+    		if ($_POST["number"]==null || !preg_match("/^[0-9]+$/", $_POST["number"])){
+    				echo "人数を正しく入力して下さい。";
+        	}
+        	else {
+       			echo "キーワード「".$_POST["keyword"]."」　人数「".$_POST["number"]."人」での検索結果<br>\n";
+            	echo "<hr><br>\n";
+            	echo "<ul class=\"popup\"\n>";
+            	if(@$_POST["sort"] == "downsort"){
+            		arsort($tf_data[@$_POST["keyword"]]);//キーワードの出現回数を降順にソート
+            	}
+            	foreach($tf_data[@$_POST["keyword"]] as $key => $val ) {
+            		if (@$_POST["number"] == @$fc_data[$key]  && @$_POST["number"]<>null){
+                		echo "<li><a href=\"$key\" rel=\"lightbox[search]\" class=\"popup\"><img src='$key' height=\"300\" id=\"$key\"></a><span>キーワード出現回数＝".$val."回<br>\n写真中の人の数＝".@$fc_data[$key]."人<br>$key</span></li>\n";
+						$result_num++;
+                	}
+            	}
+        	}
+    	}
     echo "</ul>";
-  } elseif (@$_POST["keyword"]==null) {
-    echo '検索キーワードを入力して下さい。';
-  } else {
-    echo '検索キーワードに合致する写真はありません。';
-  }
-  echo "<p class=\"open\">合計</p><div id=\"slideBox\">検索結果は".$result_num."件でした。</div>";
+    }
+	elseif (@$_POST["keyword"]==null) {
+		echo '検索キーワードを入力して下さい。';
+	}
+	else {
+		echo '検索キーワードに合致する写真はありません。';
+	}
+	echo "<p class=\"open\">合計</p><div id=\"slideBox\">検索結果は".$result_num."件でした。</div>";
 }
 else {
-  echo "左、検索フレームより条件を入力してください。";
+	echo "左、検索フレームより条件を入力してください。";
 }
-
 ?>
 </body>
 </html>
