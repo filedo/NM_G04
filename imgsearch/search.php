@@ -29,7 +29,8 @@
         }
         echo "<input type=\"radio\" name=\"sort\" value=\"upsort\" checked>昇順";
     	echo "<input type=\"radio\" name=\"sort\" value=\"downsort\">降順</p>\n";
-		echo "<input type=\"submit\" value=\"Search!\" />\n";
+		echo "<input type=\"submit\" name=\"search\" value=\"Search!\" />\n";
+		echo "<input type=\"submit\" name=\"debug\" value=\"Debug...\" />\n";
    		echo "</p>\n";
 		echo "</form>\n";
 	}
