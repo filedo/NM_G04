@@ -35,5 +35,16 @@
 		echo "</form>\n";
 	}
 ?>
+    <div style="border:dotted 2px #FFDAB9; margin:20px;">
+        <p style="font-size: 10px;">
+        [数値指定] - [範囲指定] - [キーワードのみ]<br>
+        の、検索設定ボタンをひとつ選択<br>
+        次いで出てくるフォームへ、条件を入力<br>
+        画像周辺にキーワードが出現回数した回数<br>
+        に対して昇順か降順を指定し<br>
+        Search!で検索結果を表示します。<br>
+        またDebug...で輪郭抽出結果を出力します
+        </p>
+    </div>
     </body>
 </html>
